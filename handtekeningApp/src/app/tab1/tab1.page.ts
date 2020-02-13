@@ -7,6 +7,10 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
-
+  points = [];
+  signatureImage;
+  showImage(data) {
+    this.signatureImage = data;
+  }
+ 
 }
