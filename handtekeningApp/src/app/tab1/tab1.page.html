@@ -11,7 +11,22 @@
     <ion-toolbar>
       <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
+  
   </ion-header>
 
+
   <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div>
+    <ng-signature-pad
+    doneButtonText="Show Image"
+  format="base64"
+  width="40px"
+  height="40px"
+    (done)="showImage($event)">
+</ng-signature-pad>
+  </div>
+
+
+<img [src]="signatureImage" *ngIf="signatureImage" />
 </ion-content>
+
