@@ -4,6 +4,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 const STORAGE_KEY = 'naam';
 const STORAGE_KEY2 = 'handtekening';
+const STORAGE_KEY3='locatie';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,21 @@ export class FavoriteService {
 
     })
   }
+  setLocatie(locatie){
+    return this.getLocatie().then(res => {
+      if (res) {
+        res.push(locatie);
+        return this.storage.set(STORAGE_KEY3, res);
+      }
+      else {
+        return this.storage.set(STORAGE_KEY3,[locatie])
+      }
+
+    })
+  }
+  getLocatie(){
+    return this.storage.get(STORAGE_KEY3);
+  }
   getNaam() {
     this.storage.get(STORAGE_KEY);
   }
@@ -47,7 +63,7 @@ export class FavoriteService {
       if(result){
         result.forEach(handtekening => {
           if(handtekening.index){
-            
+
           }
         });
       }
