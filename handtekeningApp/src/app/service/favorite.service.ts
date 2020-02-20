@@ -63,7 +63,6 @@ export class FavoriteService {
       if(result){
         result.forEach(handtekening => {
           if(handtekening.index){
-            
 
           }
         });

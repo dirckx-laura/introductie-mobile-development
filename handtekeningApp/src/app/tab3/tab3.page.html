@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Admin login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item >
+    <ion-input [class]="passwordCheck" [type]="passwordType" placeholder="Wachtwoord" [(ngModel)]="pass"></ion-input>
+    <ion-icon name="eye" [color]="passwordShown === true ? 'dark' : 'medium'" item-end (click)="togglePass()"></ion-icon>
+  </ion-item>
+  <ion-item  lines="none">
+    <ion-button  lines="none" (click)="logIn()">Login</ion-button>
+  </ion-item>
+</ion-content>
