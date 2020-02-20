@@ -1,2 +1,0 @@
-# introductie mobile development
- 

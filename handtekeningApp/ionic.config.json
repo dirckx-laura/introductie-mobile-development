@@ -1,8 +1,0 @@
-{
-  "name": "handtekeningApp",
-  "integrations": {
-    "capacitor": {},
-    "cordova": {}
-  },
-  "type": "angular"
-}
