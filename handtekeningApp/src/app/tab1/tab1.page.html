@@ -8,21 +8,47 @@
 
 <ion-content>
 
-
+  <form [formGroup]="naamForm" (ngSubmit)="setNaam()">
+    <br />
+    <label>
+      Voornaam:
+      <input type="text" formControlName="voornaam">
+    </label>
+    <br />
+    <label>
+      Achternaam:
+      <input type="text" formControlName="achternaam">
+    </label>
+    <br />
+  </form>
   <ion-item>
-    <ion-label >Voornaam</ion-label>
+    <ion-label id="voornaam" >Voornaam</ion-label>
     <ion-input inputmode="text"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label>Achternaam</ion-label>
+    <ion-label id="naam">Achternaam</ion-label>
     <ion-input inputmode="text" ></ion-input>
+    <!-- <ion-button  (click)="setNaam()">Zet achternaam</ion-button> -->
   </ion-item>
 
 
-  <ion-button color="primary">Verzenden</ion-button>
+  <ion-button color="primary" (click)="setNaam()">Verzenden</ion-button>
  
+  <div>
+    <ion-button (click)="getAllNamen()"> test</ion-button> 
+  </div>
+  <!-- <canvas id='canvasTest'>
 
+  </canvas> -->
+  <div id='demo'>
+
+  </div>
+  <!-- <img [src]="imgurl"> -->
+  <div id='demo2'>
+
+  </div>
+  <img id="ht" width="100px" height="50px"/>
 
   <div>
     <ng-signature-pad
@@ -30,7 +56,7 @@
   format="base64"
   width="40px"
   height="40px"
-    (done)="showImage($event)">
+    (done)="saveImage($event)">
 </ng-signature-pad>
   </div>
 
