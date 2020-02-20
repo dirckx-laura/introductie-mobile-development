@@ -42,7 +42,18 @@ export class FavoriteService {
   getNamen() {
     return this.storage.get(STORAGE_KEY);
   }
+  getHandtekening(id){
+    return this.storage.get(STORAGE_KEY2).then(result=>{
+      if(result){
+        result.forEach(handtekening => {
+          if(handtekening.index){
+            
+          }
+        });
+      }
+    })
+  }
   getHandtekeningen() {
-    return this.storage.get(STORAGE_KEY2)
+    return this.storage.get(STORAGE_KEY2);
   }
 }
