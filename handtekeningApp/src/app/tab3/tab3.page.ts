@@ -14,10 +14,30 @@ export class Tab3Page {
   pass:string = "";
   passwordShown:boolean = false;
   passwordType:string = "password";
+  newPassword: string;
   
   
 
   constructor(public router: Router, public alertCtrl: AlertController) {}
+
+
+  async shortPassAlert() {
+    const alert = await this.alertCtrl.create({
+    subHeader: 'ERR_S_PASS',
+    message: 'Een wachtwoord moet uit minstens 5 characters bestaan',
+    buttons: ['OK']
+   });
+   await alert.present(); 
+  }
+
+  async ChangedPassAlert() {
+    const alert = await this.alertCtrl.create({
+    subHeader: 'Succes',
+    message: 'Het wachtwoord is gewijzigd!',
+    buttons: ['OK']
+   });
+   await alert.present(); 
+  }
 
   async failNoPassAlert() {
     const alert = await this.alertCtrl.create({
@@ -71,6 +91,18 @@ export class Tab3Page {
         this.failPassAlert();
           console.log("Fout wachtwoord!");
           
+      }
+     
+    }
+
+    public changePass(){
+      if (this.pass.length < 5) {
+        this.shortPassAlert();
+      } else {
+        this.newPassword = this.password;
+        this.newPassword = this.pass;
+        this.password = this.newPassword;
+        this.ChangedPassAlert();
       }
      
     }

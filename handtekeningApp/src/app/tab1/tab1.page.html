@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color= "primary">
     <ion-title>
      Handtekening
     </ion-title>
@@ -20,18 +20,13 @@
       <input type="text" formControlName="achternaam">
     </label>
     <br />
+    <label>
+      StudentenNr:
+      <input type="text" formControlName="studentenNr">
+    </label>
+    <br />
   </form>
-  <!-- <ion-item>
-    <ion-label id="voornaam" >Voornaam</ion-label>
-    <ion-input inputmode="text"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label id="naam">Achternaam</ion-label>
-    <ion-input inputmode="text" ></ion-input>
-    <ion-button  (click)="setNaam()">Zet achternaam</ion-button>
-  </ion-item> -->
-
+ 
   <div>
     <ng-signature-pad
     showDoneButton
@@ -48,9 +43,7 @@
   <div>
     <ion-button (click)="getAllNamen()">Aanwezigheidslijst</ion-button> 
   </div>
-  <!-- <canvas id='canvasTest'>
-
-  </canvas> -->
+  
   <div id='demo'>
 
   </div>
@@ -58,15 +51,42 @@
     
 
   </table>
-  <!-- <img [src]="imgurl"> -->
   <div id='demo2'>
 
   </div>
-  <!-- <img id="ht" width="100px" height="50px"/> -->
 
+
+
+ 
+  
+   
+    <ion-item  (click)="locatePosition()">
+      <ion-button fill="clear">
+          <ion-icon slot="start" name="map"></ion-icon>
+          Locate Position
+      </ion-button>
+      
+      <!-- Functie moet nog uitgewerkt worden maar kan dat niet testen. geen kabel C -->
+      <ion-button  [disabled]="buttonDisabled">
+        <ion-icon name="qr-scanner"></ion-icon>
+        Scan CODE
+    </ion-button>
   
 
+  </ion-item>
 
-<!-- <img [src]="signatureImage" *ngIf="signatureImage" /> -->
+  <div id="mapId" width="0px" height="0px">
+
+
+<ion-button shape="round" expand="block" (click)="confirmLocation()" >Confirm Location</ion-button>
+</div>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+    </ion-toolbar>
+  </ion-header>
+
+ 
 </ion-content>
+
 

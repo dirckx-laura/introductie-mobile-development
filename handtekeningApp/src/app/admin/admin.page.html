@@ -1,30 +1,30 @@
+
 <ion-header>
   <ion-toolbar>
     <ion-title>admin</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+
+<ion-content onload="getAllNamen()">
  
-  <ion-badge color="danger" style="
+  
+  <div>
+    <ion-button (click)="getAllNamen()">Aanwezigheidslijst</ion-button> 
+  </div>
+  <div>
+    <label for="toggle">QR-scanner aanzetten?</label>
+    <ion-toggle id="toggle" [(ngModel)]="myValue" (ionChange)="QrEnable()"></ion-toggle>
+  </div>
+  <div>
+    <ion-button (click) = "goBack()">Log uit</ion-button>
+  </div>
+  <ion-badge id="count" color="danger" style="
   right: 5%;
-  position: absolute;">0</ion-badge>
-  <table style="width:90%; margin:auto; text-align: left; margin-top: 5%;">
-    <tr>
-      <th>Achternaam</th>
-      <th>Voornaam</th>
-      <th>Handtekening</th>
-    </tr>
-    <tr>
-      <td>Jill</td>
-      <td>Smith</td>
-      <td><img src=""/></td>
-    </tr>
-    <tr>
-      <td>Eve</td>
-      <td>Jackson</td>
-      <td><img src=""/></td>
-    </tr>
+  position: absolute;"></ion-badge>
+  <table id="tableTest" style="width:90%; margin:auto; text-align: left; margin-top: 5%;">
+    
   </table>
-  <ion-button (click) = "goBack()">Log out</ion-button>
+  
 </ion-content>
+
