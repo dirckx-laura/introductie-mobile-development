@@ -20,8 +20,22 @@ export class Tab1Page {
     achternaam: ['', Validators.required],
   })
   points = [];
-  signatureImage;
+  signatureImage=null;
   imgurl;
+  
+
+  
+  saveImage(data) {
+    if(data!="data:,"){
+      this.signatureImage = data;
+      console.log(data);
+    }
+    // this.favoriteService.setHandtekening(this.signatureImage);
+    
+    // var tussenimgurl=URL.createObjectURL(new Blob([data],{ type: "image/jpeg" }));
+    
+
+  }
   setNaam() {
     // this.naam=document.getElementById('voornaam').innerText;
     // this.naam+=document.getElementById('naam').innerText;
@@ -32,20 +46,21 @@ export class Tab1Page {
     this.naamForm.value.voornaam = "";
     this.naamForm.value.achternaam = "";
     this.naamForm.reset("");
-    this.favoriteService.setNaam(this.naam);
+    if(this.signatureImage!=null){
+      this.favoriteService.setNaam(this.naam);
+    this.favoriteService.setHandtekening(this.signatureImage);
+    }
+    
+
 
 
   }
-
-  saveImage(data) {
-    this.signatureImage = data;
-    // var tussenimgurl=URL.createObjectURL(new Blob([data],{ type: "image/jpeg" }));
-    this.favoriteService.setHandtekening(data);
-
-    console.log(data);
-  }
-  // laat alle namen en handtekeningen naast elkaar zien
+  // laat alle namen en handtekeningen in een tabel zien
   getAllNamen() {
+    document.getElementById("tableTest").innerHTML="<tr>"+
+    "<th>Naam</th>"+
+    "<th>Handtekening</th>"+
+  "</tr>";
     this.favoriteService.getNamen().then(result => {
       result.forEach(test=>{
         this.favoriteService.getHandtekeningen().then(res=>{
@@ -53,19 +68,20 @@ export class Tab1Page {
             if(res.indexOf(link)==result.indexOf(test)){
               var img = document.createElement("img");
               img.src = res[result.indexOf(test)];
-    
-              var tussenstap=document.getElementById("demo");
-              tussenstap.appendChild(img);
-              document.getElementById("demo").innerHTML+=test;
+
+              var tussenstap=document.getElementById("tableTest");
+              tussenstap.innerHTML+=`<td>${test}</td><td><img src="${img.src}" width="250px" height="75px"/></td>`;
+              // tussenstap.appendChild(img);
+              // document.getElementById("naamKolom").appendChild(test);
               console.log(img);
             }
           })
           
         })
       })
-
       // document.getElementById("demo").innerHTML = result;
     });
+    
     // this.favoriteService.getHandtekeningen().then(result => {
     //   console.log("zrgzuorggz");
     //   if (result) {

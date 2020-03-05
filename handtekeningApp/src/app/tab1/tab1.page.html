@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-
+<script>alert(test)</script>
   <form [formGroup]="naamForm" (ngSubmit)="setNaam()">
     <br />
     <label>
@@ -21,7 +21,7 @@
     </label>
     <br />
   </form>
-  <ion-item>
+  <!-- <ion-item>
     <ion-label id="voornaam" >Voornaam</ion-label>
     <ion-input inputmode="text"></ion-input>
   </ion-item>
@@ -29,14 +29,24 @@
   <ion-item>
     <ion-label id="naam">Achternaam</ion-label>
     <ion-input inputmode="text" ></ion-input>
-    <!-- <ion-button  (click)="setNaam()">Zet achternaam</ion-button> -->
-  </ion-item>
+    <ion-button  (click)="setNaam()">Zet achternaam</ion-button>
+  </ion-item> -->
 
-
+  <div>
+    <ng-signature-pad
+    showDoneButton
+  format="base64"
+  width="40px"
+  height="40px"
+  emitOnDragEnd=true
+  showClearButton="false"
+    (done)="saveImage($event)">
+</ng-signature-pad>
+  </div>
   <ion-button color="primary" (click)="setNaam()">Verzenden</ion-button>
  
   <div>
-    <ion-button (click)="getAllNamen()"> test</ion-button> 
+    <ion-button (click)="getAllNamen()">Aanwezigheidslijst</ion-button> 
   </div>
   <!-- <canvas id='canvasTest'>
 
@@ -44,23 +54,19 @@
   <div id='demo'>
 
   </div>
+  <table id="tableTest">
+    
+
+  </table>
   <!-- <img [src]="imgurl"> -->
   <div id='demo2'>
 
   </div>
   <!-- <img id="ht" width="100px" height="50px"/> -->
 
-  <div>
-    <ng-signature-pad
-    doneButtonText="Show Image"
-  format="base64"
-  width="40px"
-  height="40px"
-    (done)="saveImage($event)">
-</ng-signature-pad>
-  </div>
+  
 
 
-<img [src]="signatureImage" *ngIf="signatureImage" />
+<!-- <img [src]="signatureImage" *ngIf="signatureImage" /> -->
 </ion-content>
 
