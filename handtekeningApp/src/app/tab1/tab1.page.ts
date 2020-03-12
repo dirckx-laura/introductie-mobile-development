@@ -1,7 +1,7 @@
 
 import { FavoriteService } from '../service/favorite.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Component, Directive } from '@angular/core';
+import { Component, Directive, Injectable } from '@angular/core';
 import { Map, latLng, tileLayer, Layer } from 'leaflet';
 import {Router} from '@angular/router';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
@@ -9,7 +9,13 @@ import { HttpClient } from '@angular/common/http'
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { map } from "rxjs/operators";
+import { HttpClientModule } from '@angular/common/http';
 
+
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
+import {Base64ToGallery} from '@ionic-native/base64-to-gallery/ngx';
 
 
 @Component({
@@ -18,20 +24,33 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  constructor(public favoriteService: FavoriteService,public fb: FormBuilder, private sanitizer: DomSanitizer, private router:Router) {
+
+  qrData = "Test";
+  scannedCode = null;
+
+
+  constructor(private barcodeScanner: BarcodeScanner,private http:HttpClient ,public favoriteService: FavoriteService,public fb: FormBuilder, private sanitizer: DomSanitizer, private router:Router, private geolocation: Geolocation) {
   }
 
-
+  scanCode(){
+    this.barcodeScanner.scan().then(
+     barcodeData => {
+        this.scannedCode = barcodeData;
+      }
+    );
+    
+    }
+ 
   //variabele voor QR-scanner
   buttonDisabled:boolean;
   //variabelen voor locatie
-  map:Map;
-  newMarker:any;
+ 
   lon:any;
   lat:any;
+
  
     // reference naar de goReverseService API van openstreetmap
-    geoReverseService = 'https://nominatim.openstreetmap.org/reverse?key=iTzWSiYpGxDvhATNtSrqx5gDcnMOkntL&format=json&addressdetails=1&lat={lat}&lon={lon}'
+    geoReverseService = 'nominatim.openstreetmap.org/reverse?format=json&lat='
     pointedAddressOrg: string
     pointedAddress: string
   //variabelen voor handtekeningen
@@ -47,10 +66,6 @@ export class Tab1Page {
   imgurl;
 
   
-
-  ionViewDidEnter(){
-    this.loadMap();
-  }
   
   saveImage(data) {
     if(data!="data:,"){
@@ -86,19 +101,42 @@ export class Tab1Page {
 
   //positie bepalen
   locatePosition(){
-    this.map.locate({setView:true}).on("locationfound", (e: any)=> {
-      this.lon = e.longitude;
-      this.lat = e.latitude;
-
+    this.geolocation.getCurrentPosition().then((resp) => {
+      resp.coords.latitude
+      resp.coords.longitude;
+      
      
-    });
+      //get json      
+     this.http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + resp.coords.latitude + '&lon=' + resp.coords.longitude).subscribe(data => {
+      console.log(data);
+      this.favoriteService.setLocatie(data);
+ });   
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+     
+     let watch = this.geolocation.watchPosition();
+     watch.subscribe((data) => {
+      // data can be a set of coordinates, or an error (if an error occurred).
+      data.coords.latitude
+       data.coords.longitude
+       
+     });
   }
 
-  //map laden
-  loadMap(){this.map = new Map("mapId",{
-    zoomControl: false,
-    attributionControl:false    
-  })
+
+  
+/*
+getAddress: function(lat, lng) {
+			var q = $q.defer();
+			$http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&zoom=18&addressdetails=1').
+			success(function(data, status, headers, config) {
+					q.resolve(data);
+				});
+			return q.promise;
+		}
+*/
+ 
   
   /*
   .setView([51.2194,4.4025], 13);
@@ -106,29 +144,14 @@ export class Tab1Page {
     { attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'})
     .addTo(this.map); // This line is added to add the Tile Layer to our map*/
    
-  }
+  //}
 
-   //deze methode word opgeroepen wanneer iemand op 'confirm location' drukt
-   confirmLocation(data){
-    const service = (this.geoReverseService || '')
-      .replace(new RegExp('{lon}', 'ig'), `${this.lon}`)
-      .replace(new RegExp('{lat}', 'ig'), `${this.lat}`)
-      
-      //hier toon ik de link die word opgeslagen in de console
-      console.log(service)
-    //hier sla ik de link als JSON in onze databank als locatie
-      this.favoriteService.setLocatie(service);
 
-    //hier toon ik de array van locaties in de console. Als we op deze link drukken opent de JSON
-        this.favoriteService.getLocatie().then(result=>{
-            console.log(result)
-            
-        });
-        
-
-  }
   // laat alle namen en handtekeningen in een tabel zien
   getAllNamen() {
+    this.favoriteService.getLocatie().then(locaties=>{
+      locaties.forEach(locatie=>console.log(locatie));
+    })
     document.getElementById("tableTest").innerHTML="<tr>"+
     "<th>StudentenNr</th>"+
     "<th>Voornaam</th>"+
@@ -194,13 +217,6 @@ export class Tab1Page {
 
     // })
   
-  
-
- 
-
-
-
-
 
 
   }}

@@ -10,19 +10,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FavoriteService } from './service/favorite.service';
 import { IonicStorageModule } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation/ngx'
+import { HttpClientModule } from '@angular/common/http';
 
+import {BarcodeScanner} from '@ionic-native/barcode-scanner/ngx';
+import {Base64ToGallery} from '@ionic-native/base64-to-gallery/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,IonicStorageModule.forRoot()],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,IonicStorageModule.forRoot(), HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
     FavoriteService,
+    Geolocation,
+    BarcodeScanner,Base64ToGallery,
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-
+     
   ],
   
   bootstrap: [AppComponent]

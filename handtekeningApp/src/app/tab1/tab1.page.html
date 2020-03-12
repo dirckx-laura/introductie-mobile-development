@@ -43,7 +43,14 @@
   <div>
     <ion-button (click)="getAllNamen()">Aanwezigheidslijst</ion-button> 
   </div>
+  <ion-button shape="round" expand="block" (click)="locatePosition()" >Confirm Location</ion-button>
+
   
+  <ion-button (click)="scanCode()" color="secondary">
+    <ion-icon name="gr-scanner" > </ion-icon>
+     Scan Code
+    </ion-button>
+
   <div id='demo'>
 
   </div>
@@ -55,31 +62,6 @@
 
   </div>
 
-
-
- 
-  
-   
-    <ion-item  (click)="locatePosition()">
-      <ion-button fill="clear">
-          <ion-icon slot="start" name="map"></ion-icon>
-          Locate Position
-      </ion-button>
-      
-      <!-- Functie moet nog uitgewerkt worden maar kan dat niet testen. geen kabel C -->
-      <ion-button  [disabled]="buttonDisabled">
-        <ion-icon name="qr-scanner"></ion-icon>
-        Scan CODE
-    </ion-button>
-  
-
-  </ion-item>
-
-  <div id="mapId" width="0px" height="0px">
-
-
-<ion-button shape="round" expand="block" (click)="confirmLocation()" >Confirm Location</ion-button>
-</div>
 
   <ion-header collapse="condense">
     <ion-toolbar>

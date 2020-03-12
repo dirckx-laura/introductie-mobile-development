@@ -1,6 +1,6 @@
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
@@ -9,8 +9,10 @@ import {IonicStorageModule} from '@ionic/storage';
 import { SignaturePadModule } from '@ng-plus/signature-pad';
 
 
+import {NgxQRCodeModule} from 'ngx-qrcode2'; 
 @NgModule({
   imports: [
+   
     IonicModule,
     CommonModule,
     FormsModule,
@@ -18,7 +20,7 @@ import { SignaturePadModule } from '@ng-plus/signature-pad';
     IonicStorageModule.forRoot(),
     SignaturePadModule,
     ReactiveFormsModule,
-    RouterModule.forChild([{ path: '', component: Tab1Page }])
+    RouterModule.forChild([{ path: '', component: Tab1Page }]),  NgxQRCodeModule ,
   ],
   declarations: [Tab1Page]
 })

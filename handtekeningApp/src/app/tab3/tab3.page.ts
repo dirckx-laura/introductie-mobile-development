@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -15,10 +16,11 @@ export class Tab3Page {
   passwordShown:boolean = false;
   passwordType:string = "password";
   newPassword: string;
+  key:string = 'password';
   
   
 
-  constructor(public router: Router, public alertCtrl: AlertController) {}
+  constructor(public router: Router, public alertCtrl: AlertController, private storage: Storage) {}
 
 
   async shortPassAlert() {
@@ -94,7 +96,18 @@ export class Tab3Page {
       }
      
     }
+    
+    saveData(){
+      this.storage.set(this.key, this.password);
+      this.loadData();
+    }
 
+    loadData(){
+      this.storage.get(this.key).then((val) => {
+        console.log('Your password is ', val);
+      });
+    }
+    
     public changePass(){
       if (this.pass.length < 5) {
         this.shortPassAlert();
