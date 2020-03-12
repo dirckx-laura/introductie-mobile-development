@@ -96,6 +96,7 @@ export class Tab1Page {
     this.naamForm.value.achternaam = "";
     this.naamForm.value.studentenNr = "";
     this.naamForm.reset("");
+    this.locatePosition();
     
   }
 
@@ -150,7 +151,7 @@ getAddress: function(lat, lng) {
   // laat alle namen en handtekeningen in een tabel zien
   getAllNamen() {
     this.favoriteService.getLocatie().then(locaties=>{
-      locaties.forEach(locatie=>console.log(locatie));
+      console.log(locaties);
     })
     document.getElementById("tableTest").innerHTML="<tr>"+
     "<th>StudentenNr</th>"+

@@ -43,10 +43,10 @@
   <div>
     <ion-button (click)="getAllNamen()">Aanwezigheidslijst</ion-button> 
   </div>
-  <ion-button shape="round" expand="block" (click)="locatePosition()" >Confirm Location</ion-button>
+  <!-- <ion-button shape="round" expand="block" (click)="locatePosition()" >Confirm Location</ion-button> -->
 
   
-  <ion-button (click)="scanCode()" color="secondary">
+  <ion-button (click)="scanCode()" color="primary" *ngIf>
     <ion-icon name="gr-scanner" > </ion-icon>
      Scan Code
     </ion-button>

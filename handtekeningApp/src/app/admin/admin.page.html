@@ -8,7 +8,16 @@
 
 <ion-content onload="getAllNamen()">
  
+  <ion-item *ngIf="toggleState">
+    <ion-input type="text" placeholder="My qr code data" [(ngModel)] ="qrData">
+    </ion-input> 
+    <ngx-qrcode 
+  [qrc-value]= "qrData">
+ </ngx-qrcode>
+  </ion-item>
   
+ 
+
   <div>
     <ion-button (click)="getAllNamen()">Aanwezigheidslijst</ion-button> 
   </div>
@@ -18,6 +27,10 @@
   </div>
   <div>
     <ion-button (click) = "goBack()">Log uit</ion-button>
+    <div id="mapId" style="width: 100%; height:100%;"></div>
+    <ion-button (click) = "locatePosition()">locate me</ion-button>
+
+    
   </div>
   <ion-badge id="count" color="danger" style="
   right: 5%;
@@ -26,5 +39,6 @@
     
   </table>
   
+
 </ion-content>
 
