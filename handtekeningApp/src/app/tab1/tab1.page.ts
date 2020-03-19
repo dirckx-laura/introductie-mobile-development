@@ -35,7 +35,8 @@ export class Tab1Page {
   scanCode(){
     this.barcodeScanner.scan().then(
      barcodeData => {
-        this.scannedCode = barcodeData;
+        this.scannedCode = barcodeData.text;
+        
       }
     );
     
@@ -96,8 +97,16 @@ export class Tab1Page {
     this.naamForm.value.achternaam = "";
     this.naamForm.value.studentenNr = "";
     this.naamForm.reset("");
-    this.locatePosition();
+    
     this.favoriteService.setDatum(new Date().toLocaleDateString()+"\t"+new Date().toLocaleTimeString());
+    if(this.favoriteService.ShowCode){
+      this.favoriteService.setBarcode(this.scannedCode);
+      this.favoriteService.setLocatie("/");
+    }
+    else{
+      this.locatePosition();
+      this.favoriteService.setBarcode("/");
+    }
     
   }
 
@@ -160,6 +169,7 @@ getAddress: function(lat, lng) {
     "<th>Handtekening</th>"+
     "<th>Datum</th>"+
     "<th>Adress</th>"+
+    "<th>Barcode</th>"+
   "</tr>";
     this.favoriteService.getNamen().then(result => {
       result.forEach(test=>{
@@ -173,15 +183,20 @@ getAddress: function(lat, lng) {
                       datums.forEach(datum=>{
                         this.favoriteService.getLocatie().then(locaties=>{
                           locaties.forEach(locatie=>{
-                            if(res.indexOf(link)==result.indexOf(test) && res2.indexOf(sNr)==res.indexOf(link) && res3.indexOf(voorNaam)==res.indexOf(link) &&datums.indexOf(datum)==res.indexOf(link)&& locaties.indexOf(locatie)==datums.indexOf(datum) ){
-                              var img = document.createElement("img");
-                              img.src = res[result.indexOf(test)];
-                             
-                              var tussenstap=document.getElementById("tableTest");
-                              tussenstap.innerHTML+=`<td>${sNr}</td><td>${voorNaam}</td><td>${test}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${locatie.address.road} ${locatie.address.hamlet}</td>`;
-                              // tussenstap.appendChild(img);
-                              // document.getElementById("naamKolom").appendChild(test);
-                            }
+                            this.favoriteService.getBarcodes().then(barcodes=>{
+                              barcodes.forEach(barcode=>{
+                                if(res.indexOf(link)==result.indexOf(test) && res2.indexOf(sNr)==res.indexOf(link) && res3.indexOf(voorNaam)==res.indexOf(link) &&datums.indexOf(datum)==res.indexOf(link)&& locaties.indexOf(locatie)==datums.indexOf(datum)&& barcodes.indexOf(barcode)==locaties.indexOf(locatie) ){
+                                  var img = document.createElement("img");
+                                  img.src = res[result.indexOf(test)];
+                                 
+                                  var tussenstap=document.getElementById("tableTest");
+                                  tussenstap.innerHTML+=`<td>${sNr}</td><td>${voorNaam}</td><td>${test}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${locatie.address.road} ${locatie.address.hamlet}</td><td>${barcode}</td>`;
+                                  // tussenstap.appendChild(img);
+                                  // document.getElementById("naamKolom").appendChild(test);
+                                }
+                              })
+                            })
+                            
                           })
                         })
                             
