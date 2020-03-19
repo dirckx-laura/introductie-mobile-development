@@ -7,6 +7,7 @@ const STORAGE_KEY2 = 'handtekening';
 const STORAGE_KEY3='locatie';
 const STORAGE_KEY4='studentNr';
 const STORAGE_KEY5='voornaam';
+const STORAGE_KEY6='datum';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,6 @@ const STORAGE_KEY5='voornaam';
 export class FavoriteService {
 
   constructor(public storage: Storage) { }
-
   setNaam(naam) {
     return this.getNamen().then(result => {
       if (result) {
@@ -23,6 +23,17 @@ export class FavoriteService {
       }
       else {
         return this.storage.set(STORAGE_KEY, [naam])
+      }
+    })
+  }
+  setDatum(datum) {
+    return this.getDatums().then(result => {
+      if (result) {
+        result.push(datum);
+        return this.storage.set(STORAGE_KEY6, result);
+      }
+      else {
+        return this.storage.set(STORAGE_KEY6, [datum])
       }
     })
   }
@@ -84,16 +95,8 @@ export class FavoriteService {
   getSnummers() {
     return this.storage.get(STORAGE_KEY4);
   }
-  getHandtekening(id){
-    return this.storage.get(STORAGE_KEY2).then(result=>{
-      if(result){
-        result.forEach(handtekening => {
-          if(handtekening.index){
-
-          }
-        });
-      }
-    })
+  getDatums() {
+    return this.storage.get(STORAGE_KEY6);
   }
   getHandtekeningen() {
     return this.storage.get(STORAGE_KEY2);

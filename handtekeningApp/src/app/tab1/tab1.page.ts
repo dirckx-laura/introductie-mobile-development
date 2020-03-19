@@ -97,6 +97,7 @@ export class Tab1Page {
     this.naamForm.value.studentenNr = "";
     this.naamForm.reset("");
     this.locatePosition();
+    this.favoriteService.setDatum(new Date().toLocaleDateString()+"\t"+new Date().toLocaleTimeString());
     
   }
 
@@ -150,14 +151,15 @@ getAddress: function(lat, lng) {
 
   // laat alle namen en handtekeningen in een tabel zien
   getAllNamen() {
-    this.favoriteService.getLocatie().then(locaties=>{
-      console.log(locaties);
-    })
+    
+    
     document.getElementById("tableTest").innerHTML="<tr>"+
     "<th>StudentenNr</th>"+
     "<th>Voornaam</th>"+
     "<th>Naam</th>"+
     "<th>Handtekening</th>"+
+    "<th>Datum</th>"+
+    "<th>Adress</th>"+
   "</tr>";
     this.favoriteService.getNamen().then(result => {
       result.forEach(test=>{
@@ -167,19 +169,25 @@ getAddress: function(lat, lng) {
               res2.forEach(sNr=>{
                 this.favoriteService.getVoorNamen().then(res3=>{
                   res3.forEach(voorNaam=>{
-                    if(res.indexOf(link)==result.indexOf(test) && res2.indexOf(sNr)==res.indexOf(link) && res3.indexOf(voorNaam)==res.indexOf(link)  ){
-                      var img = document.createElement("img");
-                      img.src = res[result.indexOf(test)];
-                      console.log(result);
-                      console.log(res);
-                      console.log(res2);
-                      console.log(res3);
-                      var tussenstap=document.getElementById("tableTest");
-                      tussenstap.innerHTML+=`<td>${sNr}</td><td>${voorNaam}</td><td>${test}</td><td><img src="${img.src}" width="250px" height="75px"/></td>`;
-                      // tussenstap.appendChild(img);
-                      // document.getElementById("naamKolom").appendChild(test);
-                      console.log(img);
-                    }
+                    this.favoriteService.getDatums().then(datums=>{
+                      datums.forEach(datum=>{
+                        this.favoriteService.getLocatie().then(locaties=>{
+                          locaties.forEach(locatie=>{
+                            if(res.indexOf(link)==result.indexOf(test) && res2.indexOf(sNr)==res.indexOf(link) && res3.indexOf(voorNaam)==res.indexOf(link) &&datums.indexOf(datum)==res.indexOf(link)&& locaties.indexOf(locatie)==datums.indexOf(datum) ){
+                              var img = document.createElement("img");
+                              img.src = res[result.indexOf(test)];
+                             
+                              var tussenstap=document.getElementById("tableTest");
+                              tussenstap.innerHTML+=`<td>${sNr}</td><td>${voorNaam}</td><td>${test}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${locatie.address.road} ${locatie.address.hamlet}</td>`;
+                              // tussenstap.appendChild(img);
+                              // document.getElementById("naamKolom").appendChild(test);
+                            }
+                          })
+                        })
+                            
+                      })
+                    })
+                    
                   })
                 })
                 
