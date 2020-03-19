@@ -9,12 +9,20 @@ const STORAGE_KEY4='studentNr';
 const STORAGE_KEY5='voornaam';
 const STORAGE_KEY6='datum';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class FavoriteService {
 
   constructor(public storage: Storage) { }
+
+  ShowCode: boolean;
+ 
+  
+
+
   setNaam(naam) {
     return this.getNamen().then(result => {
       if (result) {
