@@ -11,6 +11,7 @@ import { Map, tileLayer, marker, icon } from 'leaflet';
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
+  
 
   constructor(public router: Router, public favoriteService: FavoriteService, public NavCtrl: NavController) { }
   qrData = "Test";
@@ -29,11 +30,14 @@ export class AdminPage implements OnInit {
     if (this.myValue) {
       console.log(this.myValue);
       this.toggleState = true;
+      this.favoriteService.ShowCode = true;
     }
     else {
       console.log("false")
       this.toggleState = false;
+      this.favoriteService.ShowCode = false;
     }
+
   }
 
 
