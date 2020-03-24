@@ -8,21 +8,21 @@
 
 <ion-content>
 <script>alert(test)</script>
-  <form [formGroup]="naamForm" (ngSubmit)="setNaam()">
+  <form  #formcontrol="ngForm" [formGroup]="naamForm" (ngSubmit)="setNaam()">
     <br />
     <label>
       Voornaam:
-      <input type="text" formControlName="voornaam">
+      <input [(ngModel)]='ingevuld_voornaam'  type="text" formControlName="voornaam" required >
     </label>
     <br />
     <label>
       Achternaam:
-      <input type="text" formControlName="achternaam">
+      <input [(ngModel)]='ingevuld_naam' type="text" formControlName="achternaam">
     </label>
     <br />
     <label>
       StudentenNr:
-      <input type="text" formControlName="studentenNr">
+      <input [(ngModel)]='ingevuld_studentenNr'  type="text" formControlName="studentenNr">
     </label>
     <br />
   </form>
@@ -38,7 +38,7 @@
     (done)="saveImage($event)">
 </ng-signature-pad>
   </div>
-  <ion-button color="primary" (click)="setNaam()">Verzenden</ion-button>
+  <ion-button [disabled]="!formcontrol.form.valid" color="primary" (click)="setNaam()">Verzenden</ion-button>
  
   <div>
     <ion-button (click)="getAllNamen()">Aanwezigheidslijst</ion-button> 
@@ -52,6 +52,7 @@
     </ion-button>
 
 
+    <h1>{{scannedCode}}</h1>
 
   <div id='demo'>
 
