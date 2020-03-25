@@ -1,5 +1,4 @@
 # introductie mobile development
- 
-# introMobile
-# introMobile
-# introMobile
+
+Groep 2: Witse, Laura, James, Abdel
+
