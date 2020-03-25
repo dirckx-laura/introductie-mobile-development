@@ -9,6 +9,7 @@ const STORAGE_KEY4='studentNr';
 const STORAGE_KEY5='voornaam';
 const STORAGE_KEY6='datum';
 const STORAGE_KEY7='barcode';
+const STORAGE_KEY8='studentInfo';
 
 
 @Injectable({
@@ -19,18 +20,30 @@ export class FavoriteService {
   constructor(public storage: Storage) { }
 
   ShowCode: boolean;
+  indexCounter=0;
  
   
 
 
-  setNaam(naam) {
-    return this.getNamen().then(result => {
+  // setNaam(naam) {
+  //   return this.getNamen().then(result => {
+  //     if (result) {
+  //       result.push(naam);
+  //       return this.storage.set(STORAGE_KEY, result);
+  //     }
+  //     else {
+  //       return this.storage.set(STORAGE_KEY, [naam])
+  //     }
+  //   })
+  // }
+  setStudentInfo(sInfo) {
+    return this.getStudenten().then(result => {
       if (result) {
-        result.push(naam);
-        return this.storage.set(STORAGE_KEY, result);
+        result.push(sInfo);
+        return this.storage.set(STORAGE_KEY8, result);
       }
       else {
-        return this.storage.set(STORAGE_KEY, [naam])
+        return this.storage.set(STORAGE_KEY8, [sInfo])
       }
     })
   }
@@ -45,28 +58,28 @@ export class FavoriteService {
       }
     })
   }
-  setVoorNaam(voorNaam) {
-    return this.getVoorNamen().then(result => {
-      if (result) {
-        result.push(voorNaam);
-        return this.storage.set(STORAGE_KEY5, result);
-      }
-      else {
-        return this.storage.set(STORAGE_KEY5, [voorNaam])
-      }
-    })
-  }
-  setStudentNr(sNr) {
-    return this.getSnummers().then(result => {
-      if (result) {
-        result.push(sNr);
-        return this.storage.set(STORAGE_KEY4, result);
-      }
-      else {
-        return this.storage.set(STORAGE_KEY4, [sNr])
-      }
-    })
-  }
+  // setVoorNaam(voorNaam) {
+  //   return this.getVoorNamen().then(result => {
+  //     if (result) {
+  //       result.splice(this.indexCounter,0,voorNaam);
+  //       return this.storage.set(STORAGE_KEY5, result);
+  //     }
+  //     else {
+  //       return this.storage.set(STORAGE_KEY5, [voorNaam])
+  //     }
+  //   })
+  // }
+  // setStudentNr(sNr) {
+  //   return this.getSnummers().then(result => {
+  //     if (result) {
+  //       result.splice(this.indexCounter,0,sNr);
+  //       return this.storage.set(STORAGE_KEY4, result);
+  //     }
+  //     else {
+  //       return this.storage.set(STORAGE_KEY4, [sNr])
+  //     }
+  //   })
+  // }
   setHandtekening(handtekening) {
     return this.getHandtekeningen().then(res => {
       if (res) {
@@ -79,40 +92,43 @@ export class FavoriteService {
 
     })
   }
-  setLocatie(locatie){
-    return this.getLocatie().then(res => {
+  setLocatieOfBarcode(locatieOfBarcode){
+    return this.getLocatieOfBarcode().then(res => {
       if (res) {
-        res.push(locatie);
+        res.push(locatieOfBarcode);
         return this.storage.set(STORAGE_KEY3, res);
       }
       else {
-        return this.storage.set(STORAGE_KEY3,[locatie])
+        return this.storage.set(STORAGE_KEY3,[locatieOfBarcode])
       }
 
     })
   }
-  setBarcode(barcode) {
-    return this.getBarcodes().then(result => {
-      if (result) {
-        result.push(barcode);
-        return this.storage.set(STORAGE_KEY7, result);
-      }
-      else {
-        return this.storage.set(STORAGE_KEY7, [barcode])
-      }
-    })
-  }
-  getLocatie(){
+  // setBarcode(barcode) {
+  //   return this.getBarcodes().then(result => {
+  //     if (result) {
+  //       result.push(barcode);
+  //       return this.storage.set(STORAGE_KEY7, result);
+  //     }
+  //     else {
+  //       return this.storage.set(STORAGE_KEY7, [barcode])
+  //     }
+  //   })
+  // }
+  getLocatieOfBarcode(){
     return this.storage.get(STORAGE_KEY3);
   }
-  getNamen() {
-    return this.storage.get(STORAGE_KEY);
-  }
-  getVoorNamen() {
-    return this.storage.get(STORAGE_KEY5);
-  }
-  getSnummers() {
-    return this.storage.get(STORAGE_KEY4);
+  // getNamen() {
+  //   return this.storage.get(STORAGE_KEY);
+  // }
+  // getVoorNamen() {
+  //   return this.storage.get(STORAGE_KEY5);
+  // }
+  // getSnummers() {
+  //   return this.storage.get(STORAGE_KEY4);
+  // }
+  getStudenten(){
+    return this.storage.get(STORAGE_KEY8);
   }
   getDatums() {
     return this.storage.get(STORAGE_KEY6);
@@ -120,7 +136,7 @@ export class FavoriteService {
   getHandtekeningen() {
     return this.storage.get(STORAGE_KEY2);
   }
-  getBarcodes() {
-    return this.storage.get(STORAGE_KEY7);
-  }
+  // getBarcodes() {
+  //   return this.storage.get(STORAGE_KEY7);
+  // }
 }

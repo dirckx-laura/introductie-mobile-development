@@ -54,7 +54,7 @@ export class AdminPage implements OnInit {
       "<th>Naam</th>" +
       "<th>Handtekening</th>" +
       "</tr>";
-    this.favoriteService.getNamen().then(result => {
+    this.favoriteService.getStudenten().then(result => {
       result.forEach(test => {
         this.favoriteService.getHandtekeningen().then(res => {
           res.forEach(link => {

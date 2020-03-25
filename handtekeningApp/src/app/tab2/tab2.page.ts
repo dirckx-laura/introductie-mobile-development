@@ -30,7 +30,7 @@ export class Tab2Page {
     this.loadMap();
 
     //
-    this.favoriteService.getLocatie().then(res => {
+    this.favoriteService.getLocatieOfBarcode().then(res => {
       res.forEach(element => {
         marker([element.lat, element.lon]).addTo(this.map)
 
