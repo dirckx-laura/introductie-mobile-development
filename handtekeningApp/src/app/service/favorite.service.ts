@@ -20,22 +20,11 @@ export class FavoriteService {
   constructor(public storage: Storage) { }
 
   ShowCode: boolean;
-  indexCounter=0;
  
   
 
 
-  // setNaam(naam) {
-  //   return this.getNamen().then(result => {
-  //     if (result) {
-  //       result.push(naam);
-  //       return this.storage.set(STORAGE_KEY, result);
-  //     }
-  //     else {
-  //       return this.storage.set(STORAGE_KEY, [naam])
-  //     }
-  //   })
-  // }
+  
   setStudentInfo(sInfo) {
     return this.getStudenten().then(result => {
       if (result) {
@@ -58,28 +47,7 @@ export class FavoriteService {
       }
     })
   }
-  // setVoorNaam(voorNaam) {
-  //   return this.getVoorNamen().then(result => {
-  //     if (result) {
-  //       result.splice(this.indexCounter,0,voorNaam);
-  //       return this.storage.set(STORAGE_KEY5, result);
-  //     }
-  //     else {
-  //       return this.storage.set(STORAGE_KEY5, [voorNaam])
-  //     }
-  //   })
-  // }
-  // setStudentNr(sNr) {
-  //   return this.getSnummers().then(result => {
-  //     if (result) {
-  //       result.splice(this.indexCounter,0,sNr);
-  //       return this.storage.set(STORAGE_KEY4, result);
-  //     }
-  //     else {
-  //       return this.storage.set(STORAGE_KEY4, [sNr])
-  //     }
-  //   })
-  // }
+ 
   setHandtekening(handtekening) {
     return this.getHandtekeningen().then(res => {
       if (res) {
@@ -104,29 +72,11 @@ export class FavoriteService {
 
     })
   }
-  // setBarcode(barcode) {
-  //   return this.getBarcodes().then(result => {
-  //     if (result) {
-  //       result.push(barcode);
-  //       return this.storage.set(STORAGE_KEY7, result);
-  //     }
-  //     else {
-  //       return this.storage.set(STORAGE_KEY7, [barcode])
-  //     }
-  //   })
-  // }
+  
   getLocatieOfBarcode(){
     return this.storage.get(STORAGE_KEY3);
   }
-  // getNamen() {
-  //   return this.storage.get(STORAGE_KEY);
-  // }
-  // getVoorNamen() {
-  //   return this.storage.get(STORAGE_KEY5);
-  // }
-  // getSnummers() {
-  //   return this.storage.get(STORAGE_KEY4);
-  // }
+  
   getStudenten(){
     return this.storage.get(STORAGE_KEY8);
   }
@@ -136,7 +86,5 @@ export class FavoriteService {
   getHandtekeningen() {
     return this.storage.get(STORAGE_KEY2);
   }
-  // getBarcodes() {
-  //   return this.storage.get(STORAGE_KEY7);
-  // }
+  
 }

@@ -67,40 +67,31 @@ export class Tab1Page {
 
 
 
+  // slaat de huidige handtekening op in een tijdelijke variabele
   saveImage(data) {
     if (data != "data:,") {
       this.signatureImage = data;
-      console.log(data);
     }
-    // this.favoriteService.setHandtekening(this.signatureImage);
-
-    // var tussenimgurl=URL.createObjectURL(new Blob([data],{ type: "image/jpeg" })); 
+    
 
   }
 
 
   setNaam() {
-    // this.naam=document.getElementById('voornaam').innerText;
-    // this.naam+=document.getElementById('naam').innerText;
-    // document.getElementById('voornaam').innerText="";
-    // document.getElementById('naam').innerText=""
+
     // this.favoriteService.storage.clear();
-    console.log(this.favoriteService.indexCounter);
     if (this.signatureImage != null) {
       var gegevens = this.naamForm.value.studentenNr+" "+this.naamForm.value.voornaam+" "+this.naamForm.value.achternaam;
       this.favoriteService.setStudentInfo(gegevens);
       this.favoriteService.setHandtekening(this.signatureImage);
       
     }
-    this.naamForm.value.voornaam = "";
-    this.naamForm.value.achternaam = "";
-    this.naamForm.value.studentenNr = "";
-    this.naamForm.reset("");
+    
 
     this.favoriteService.setDatum(new Date().toLocaleDateString() + "\t" + new Date().toLocaleTimeString());
     if (this.favoriteService.ShowCode) {
       
-      this.favoriteService.setLocatieOfBarcode("/ "+this.scannedCode)
+      this.favoriteService.setLocatieOfBarcode(this.naamForm.value.studentenNr+" code: "+this.scannedCode)
     }
     else {
 
@@ -112,13 +103,12 @@ export class Tab1Page {
         });
       }).catch((error) => {
         console.log('Error getting location', error);
-      });
-
-     
+      });     
     }
-
-    this.favoriteService.indexCounter++;
-    
+    this.naamForm.value.voornaam = "";
+    this.naamForm.value.achternaam = "";
+    this.naamForm.value.studentenNr = "";
+    this.naamForm.reset("");    
   }
 
   //positie bepalen
@@ -128,150 +118,7 @@ export class Tab1Page {
 
 
 
-  /*
-  getAddress: function(lat, lng) {
-        var q = $q.defer();
-        $http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng + '&zoom=18&addressdetails=1').
-        success(function(data, status, headers, config) {
-            q.resolve(data);
-          });
-        return q.promise;
-      }
-  */
+ 
 
-
-  /*
-  .setView([51.2194,4.4025], 13);
-  tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    { attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'})
-    .addTo(this.map); // This line is added to add the Tile Layer to our map*/
-
-  //}
-
-
-  // laat alle namen en handtekeningen in een tabel zien
-  getAllNamen() {
-
-    
-    document.getElementById("tableTest").innerHTML = "<tr>" +
-      "<th>Student Info</th>" +
-      "<th>Handtekening</th>" +
-      "<th>Datum</th>" +
-      "<th>Adress</th>" +
-      "</tr>";
-      this.favoriteService.getStudenten().then(studenten=>{
-        studenten.forEach(student=>{
-          console.log("index"+ studenten.indexOf(student));
-          this.favoriteService.getHandtekeningen().then(handtekeningen=>{
-            handtekeningen.forEach(handtekening=>{
-              this.favoriteService.getDatums().then(datums=>{
-                datums.forEach(datum=>{
-                  this.favoriteService.getLocatieOfBarcode().then(lOfBs=>{
-                    lOfBs.forEach(lOfB=>{
-                      if(studenten.indexOf(student)==handtekeningen.indexOf(handtekening)
-                      && studenten.indexOf(student)==datums.indexOf(datum)
-                      && studenten.indexOf(student)==lOfBs.indexOf(lOfB)){
-                        var img = document.createElement("img");
-                        img.src = handtekeningen[studenten.indexOf(student)];
-                        console.log(student);
-                        var tussenstap = document.getElementById("tableTest");
-                        tussenstap.innerHTML += `<td>${student}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${lOfB.address.road} ${lOfB.address.hamlet}</td>`;
-                      }
-                    })
-                  })
-                })
-              })
-            })
-          })
-        })
-      })
-  /*  this.favoriteService.getNamen().then(result => {
-      var counter=0;
-      console.log(result.length);
-      result.forEach(test => {        
-        this.favoriteService.getHandtekeningen().then(res => {
-          res.forEach(link => {
-
-            this.favoriteService.getSnummers().then(res2 => {
-              res2.forEach(sNr => {
-
-                this.favoriteService.getVoorNamen().then(res3 => {
-                  res3.forEach(voorNaam => {
-
-                    this.favoriteService.getDatums().then(datums => {
-                      datums.forEach(datum => {
-
-                        this.favoriteService.getLocatie().then(locaties => {
-                          locaties.forEach(locatie => {
-                            console.log(locaties.indexOf(locatie));
-                            this.favoriteService.getBarcodes().then(barcodes => {
-                              barcodes.forEach(barcode => {
-                                
-
-                                if (result.indexOf(test) == counter
-                                  && res.indexOf(link)==counter
-                                  && res2.indexOf(sNr) == counter
-                                  && res3.indexOf(voorNaam) == counter
-                                  && datums.indexOf(datum) == counter
-                                  && locaties.indexOf(locatie) == counter
-                                  
-                                  ) {
-                                    counter++;
-                                  var img = document.createElement("img");
-                                  img.src = res[result.indexOf(test)];
-                                  var tussenstap = document.getElementById("tableTest");
-                                  tussenstap.innerHTML += `<td>${sNr}</td><td>${voorNaam}</td><td>${test}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${locatie.address.road} ${locatie.address.hamlet}</td><td>${barcode}</td>`;
-                                  // tussenstap.appendChild(img);
-                                  // document.getElementById("naamKolom").appendChild(test);
-                                }
-                              })
-                            })
-
-                          })
-                        })
-
-                      })
-                    })
-
-                  })
-                })
-
-              })
-
-            })
-
-          })
-
-        })
-      })
-      // document.getElementById("demo").innerHTML = result;
-    });*/
-
-    // this.favoriteService.getHandtekeningen().then(result => {
-    //   console.log("zrgzuorggz");
-    //   if (result) {
-    //     result.forEach(link => {
-    //       // var objurl=URL.createObjectURL(new Blob([link],{ type: "image/jpeg" }));
-    //       // var img=new Image();
-    //       // img.src=objurl;
-    //       // img.setAttribute("width","40px");
-    //       // img.setAttribute("height","40px");
-
-    //       var img = document.createElement("img");
-    //       // img = document.querySelector("#ht");
-    //       img.src = link;
-
-    //       var tussenstap=document.getElementById("demo2");
-    //       tussenstap.appendChild(img);
-    //       console.log(img);
-    //     });
-
-
-    //   }
-
-    // })
-
-
-
-  }
+  
 }

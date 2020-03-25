@@ -18,7 +18,7 @@ export class Tab2Page {
   newMarker: any;
   lon: any;
   lat: any;
-  propertyList = [];
+ 
   // reference naar de goReverseService API van openstreetmap
   geoReverseService = 'https://nominatim.openstreetmap.org/reverse?key=iTzWSiYpGxDvhATNtSrqx5gDcnMOkntL&format=json&addressdetails=1&lat={lat}&lon={lon}'
  
@@ -32,17 +32,21 @@ export class Tab2Page {
     //
     this.favoriteService.getLocatieOfBarcode().then(res => {
       res.forEach(element => {
-        marker([element.lat, element.lon]).addTo(this.map)
+        this.favoriteService.getStudenten().then(studenten =>{
+          studenten.forEach(student =>{
 
+            marker([element.lat, element.lon]).addTo(this.map)
+            .bindPopup(student).openPopup()
+    
+          })
+        })
+       
       });
     })
 
   }
 
-
-
-
-  // Toont map
+  // laad map
   loadMap() {
     this.map = new Map("mapId").setView([51.2194, 4.4025], 13);
     tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -50,11 +54,6 @@ export class Tab2Page {
       .addTo(this.map); // This line is added to add the Tile Layer to our map
 
   }
-
-
-
-
-
 
 
 

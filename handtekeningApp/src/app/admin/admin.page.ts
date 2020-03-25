@@ -20,12 +20,9 @@ export class AdminPage implements OnInit {
   myValue: boolean;
   toggleState: boolean;
   
-   
- 
-
-
- 
   
+ 
+  // Hier bekijken we of het gebruik van de QR code actief staat of niet
   QrEnable() {
     if (this.myValue) {
       console.log(this.myValue);
@@ -44,38 +41,48 @@ export class AdminPage implements OnInit {
   ngOnInit() {
   }
 
+
   goBack() {
     this.router.navigateByUrl('/tabs/tab3');
   }
 
+
   getAllNamen() {
 
+   
     document.getElementById("tableTest").innerHTML = "<tr>" +
-      "<th>Naam</th>" +
+      "<th>Student Info</th>" +
       "<th>Handtekening</th>" +
+      "<th>Datum</th>" +
+      "<th>Adress</th>" +
       "</tr>";
-    this.favoriteService.getStudenten().then(result => {
-      result.forEach(test => {
-        this.favoriteService.getHandtekeningen().then(res => {
-          res.forEach(link => {
-            if (res.indexOf(link) == result.indexOf(test)) {
-              var img = document.createElement("img");
-              img.src = res[result.indexOf(test)];
-
-              var tussenstap = document.getElementById("tableTest");
-              tussenstap.innerHTML += `<td>${test}</td><td><img src="${img.src}" width="250px" height="75px"/></td>`;
-
-              this.teller++;
-              document.getElementById("count").innerHTML = this.teller.toString();
-              console.log(img);
-
-            }
+      this.favoriteService.getStudenten().then(studenten=>{
+        studenten.forEach(student=>{
+          console.log("index"+ studenten.indexOf(student));
+          this.favoriteService.getHandtekeningen().then(handtekeningen=>{
+            handtekeningen.forEach(handtekening=>{
+              this.favoriteService.getDatums().then(datums=>{
+                datums.forEach(datum=>{
+                  this.favoriteService.getLocatieOfBarcode().then(lOfBs=>{
+                    lOfBs.forEach(lOfB=>{
+                      if(studenten.indexOf(student)==handtekeningen.indexOf(handtekening)
+                      && studenten.indexOf(student)==datums.indexOf(datum)
+                      && studenten.indexOf(student)==lOfBs.indexOf(lOfB)){
+                        var img = document.createElement("img");
+                        img.src = handtekeningen[studenten.indexOf(student)];
+                        console.log(student);
+                        var tussenstap = document.getElementById("tableTest");
+                        tussenstap.innerHTML += `<td>${student}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${lOfB.address.road} ${lOfB.address.hamlet}</td>`;
+                      }
+                    })
+                  })
+                })
+              })
+            })
           })
-          this.teller = 0;
         })
       })
-
-    });
+ 
 
   }
 
