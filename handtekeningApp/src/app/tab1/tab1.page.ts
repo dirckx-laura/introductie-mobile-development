@@ -73,7 +73,7 @@ export class Tab1Page {
     }
     
   }
-
+  // set alle gegevens
   setNaam() {
 
     // this.favoriteService.storage.clear();

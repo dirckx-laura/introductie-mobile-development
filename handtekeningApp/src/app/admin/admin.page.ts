@@ -47,6 +47,7 @@ export class AdminPage implements OnInit {
   }
 
 
+  //get alle gegevens in de storage
   getAllNamen() {
 
    
