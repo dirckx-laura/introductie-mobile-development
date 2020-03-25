@@ -43,7 +43,6 @@ export class Tab1Page {
   //variabele voor QR-scanner
   buttonDisabled: boolean;
   //variabelen voor locatie
-
   lon: any;
   lat: any;
 
@@ -53,8 +52,8 @@ export class Tab1Page {
   pointedAddressOrg: string
   pointedAddress: string
   //variabelen voor handtekeningen
-  naam: String;
-  naamForm = this.fb.group({
+    naam: String;
+    naamForm = this.fb.group({
     voornaam: ['', Validators.required],
     achternaam: ['', Validators.required],
     studentenNr: ['', Validators.required],
@@ -73,9 +72,7 @@ export class Tab1Page {
       this.signatureImage = data;
     }
     
-
   }
-
 
   setNaam() {
 
@@ -100,6 +97,7 @@ export class Tab1Page {
         res.coords.longitude;
         this.http.get('http://nominatim.openstreetmap.org/reverse?format=json&lat=' + res.coords.latitude + '&lon=' + res.coords.longitude).subscribe(data => {
           this.favoriteService.setLocatieOfBarcode(data);
+       
         });
       }).catch((error) => {
         console.log('Error getting location', error);
@@ -115,10 +113,6 @@ export class Tab1Page {
   locatePosition() {
     return this.geolocation.getCurrentPosition();
   }
-
-
-
- 
 
   
 }

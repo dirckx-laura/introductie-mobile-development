@@ -72,7 +72,12 @@ export class AdminPage implements OnInit {
                         img.src = handtekeningen[studenten.indexOf(student)];
                         console.log(student);
                         var tussenstap = document.getElementById("tableTest");
-                        tussenstap.innerHTML += `<td>${student}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${lOfB.address.road} ${lOfB.address.hamlet}</td>`;
+                        if(this.favoriteService.ShowCode){
+                          tussenstap.innerHTML += `<td>${student}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${lOfB}</td>`;
+                        }
+                        else{
+                          tussenstap.innerHTML += `<td>${student}</td><td><img src="${img.src}" width="250px" height="75px"/></td><td>${datum}</td><td>${lOfB.address.road} ${lOfB.address.hamlet}</td>`;
+                        }
                       }
                     })
                   })
