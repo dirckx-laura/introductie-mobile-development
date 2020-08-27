@@ -4,7 +4,7 @@ Groep 2: Witse Cools, Laura Dirckx, James Stoels, Abdel
 
 Admin wachtwoord: Admin0000
 
-Opdracht:
+**Opdracht:**
 
 Maak een app die aanwezigheden registreert op een smartphone door volgende zaken bij te houden :
 
