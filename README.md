@@ -19,3 +19,10 @@ Maak een app die aanwezigheden registreert op een smartphone door volgende zaken
 Kies zelf de database (localstorage, sqlite, ...)
 
 Er is ook een admin interface (beveiligd met een paswoord) waar een lijst van de aanwezigheden wordt getoond, alsook de mogelijkheid om te kiezen of de app werkt met geolocatie of met een QR code. Bonuspunten worden gegeven als de lijst van aanwezigheden met geolocatie op een kaart wordt getoond.
+
+**User manual**
+
+Naar handtekeningApp file gaan.
+in terminal **ionic serve**.
+**wait**
+**Enjoy!**
