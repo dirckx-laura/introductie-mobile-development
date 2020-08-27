@@ -24,5 +24,6 @@ Er is ook een admin interface (beveiligd met een paswoord) waar een lijst van de
 
 Naar handtekeningApp file gaan.
 in terminal **ionic serve**.
+Run on Chrome.
 **wait**
 **Enjoy!**
